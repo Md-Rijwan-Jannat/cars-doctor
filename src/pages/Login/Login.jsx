@@ -1,12 +1,39 @@
 import { Link } from 'react-router-dom';
 import login from '../../assets/images/login/login.svg'
+import { useContext } from 'react';
+import { AuthContext } from '../../ContaxtProvider/AuthProvider';
+import { toast } from 'react-hot-toast';
 const Login = () => {
-    const handleLogin = event=>{
+    const { loginUser, google } = useContext(AuthContext);
+    const handleLogin = event => {
         event.preventDefault();
         const from = event.target;
         const email = from.email.value;
         const password = from.password.value;
-        console.log(email,password)
+        console.log(email, password)
+        loginUser(email, password)
+            .then(result => {
+                const signUser = result.user;
+                console.log(signUser);
+                toast.success('Successfully login')
+                from.reset('')
+            })
+            .catch(error => {
+                console.log(error);
+                toast.error(error.message);
+            })
+    }
+    const googleHandler =()=>{
+        google()
+        .then(result => {
+            const signUser = result.user;
+            console.log(signUser);
+            toast.success('Successfully login with google')
+        })
+        .catch(error => {
+            console.log(error);
+            toast.error(error.message);
+        })
     }
     return (
         <div className="hero my-24">
@@ -41,9 +68,9 @@ const Login = () => {
                         <div className='flex gap-3 my-5 justify-center items-center'>
                             <img className='btn bg-base-200 border-none hover:bg-red-300 p-2 w-12' src="https://1000logos.net/wp-content/uploads/2021/04/Facebook-logo.png" alt="" />
                             <img className='btn bg-base-200 border-none hover:bg-red-300 p-2 w-10 h-8' src="https://static-00.iconduck.com/assets.00/linkedin-icon-2048x2048-ya5g47j2.png" alt="" />
-                            <img className='btn bg-base-200 border-none hover:bg-red-300 p-2 w-10' src="https://cdn-teams-slug.flaticon.com/google.jpg" alt="" />
+                            <img onClick={googleHandler} className='btn bg-base-200 border-none hover:bg-red-300 p-2 w-10' src="https://cdn-teams-slug.flaticon.com/google.jpg" alt="" />
                         </div>
-                            <p className='text-center my-10'>You have no account? Please <Link className='text-red-600 font-bold' to={'/signUp'}>Sign Up</Link></p>
+                        <p className='text-center my-10'>You have no account? Please <Link className='text-red-600 font-bold' to={'/signUp'}>Sign Up</Link></p>
                     </div>
 
                 </div>

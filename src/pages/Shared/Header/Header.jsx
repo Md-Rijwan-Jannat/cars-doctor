@@ -1,15 +1,38 @@
 import { Link } from "react-router-dom";
 import logo from '../../../assets/logo.svg'
 import { FaSearch, FaShoppingBag } from "react-icons/fa";
+import { useContext } from "react";
+import { AuthContext } from "../../../ContaxtProvider/AuthProvider";
+import { toast } from "react-hot-toast";
 
 const Header = () => {
+    const { user, logOut } = useContext(AuthContext);
+
+    const handleLogOut = () => {
+        logOut()
+            .then(result => {
+                console.log(result)
+                toast.success('Successfully Log out.')
+            })
+            .catch(error => {
+                console.log(error);
+                toast.error(error.message);
+            })
+    }
     const navLink = <>
-         <li className="text-gray-500 font-bold"><Link to={'/'}>Home</Link></li>
-         <li className="text-gray-500 font-bold"><Link to={'/about'}>About</Link></li>
-         <li className="text-gray-500 font-bold"><Link to={'/service'}>Service</Link></li>
-         <li className="text-gray-500 font-bold"><Link to={'/blog'}>Blog</Link></li>
-         <li className="text-gray-500 font-bold"><Link to={'/contact'}>Contact</Link></li>
-         <li className="text-gray-500 font-bold"><Link to={'/login'}>Login</Link></li>
+        <li className="text-gray-500 font-bold"><Link to={'/'}>Home</Link></li>
+        <li className="text-gray-500 font-bold"><Link to={'/about'}>About</Link></li>
+        <li className="text-gray-500 font-bold"><Link to={'/service'}>Service</Link></li>
+        <li className="text-gray-500 font-bold"><Link to={'/blog'}>Blog</Link></li>
+        <li className="text-gray-500 font-bold"><Link to={'/contact'}>Contact</Link></li>
+        {
+            user ? <>
+                <li className="text-gray-500 font-bold"><Link to={'/bookings'}>My Booking</Link></li>
+                <li onClick={handleLogOut} className="text-gray-500 font-bold"><Link to={'/contact'}>Log out</Link></li>
+            </> :
+                <li className="text-gray-500 font-bold"><Link to={'/login'}>Login</Link></li>
+        }
+
     </>
     return (
         <div className="navbar bg-base-100 h-28 mb-5">
@@ -20,19 +43,19 @@ const Header = () => {
                     </label>
                     <ul tabIndex={0} className="menu menu-compact dropdown-content mt-3 p-2 shadow bg-base-100 rounded-box w-52">
                         {navLink}
-                         </ul>
+                    </ul>
                 </div>
                 <Link to={'/'} className="btn btn-ghost normal-case text-xl"><img src={logo} alt="" /></Link>
             </div>
             <div className="navbar-center hidden lg:flex">
                 <ul className="menu menu-horizontal px-1">
-                   {navLink}
+                    {navLink}
                 </ul>
             </div>
             <div className="navbar-end text-gray-500 space-x-6">
-                <FaShoppingBag/>
-                <FaSearch/>
-            <button className="btn btn-outline btn-error">Appointment</button>
+                <FaShoppingBag />
+                <FaSearch />
+                <button className="btn btn-outline btn-error">Appointment</button>
             </div>
         </div>
     );
