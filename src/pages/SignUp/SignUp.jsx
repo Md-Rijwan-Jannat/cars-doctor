@@ -30,8 +30,8 @@ const SignUp = () => {
     }
     return (
         <div className="hero my-24">
-            <div className="hero-content w-full flex-col justify-center md::flex-row">
-                <div className="md:content-left md:w-1/3">
+            <div className="hero-content w-full flex-col justify-center lg:flex-row">
+                <div className="lg:content-left md:w-1/3">
                     <img src={login} alt="" />
                 </div>
                 <div className="card flex-shrink-0 md:w-1/2 md:ml-12 border bg-base-100 p-5">

@@ -1,10 +1,14 @@
 import { useContext } from "react";
 import { AuthContext } from "../../../ContaxtProvider/AuthProvider";
 import { toast } from "react-hot-toast";
+import { useLocation, useNavigate } from "react-router-dom";
 
 
 const SocialLogin = () => {
 const {google} = useContext(AuthContext);
+const location = useLocation();
+const navigate = useNavigate();
+const from = location.state?.from?.pathname || "/";
     
     const googleHandler = () => {
         google()
@@ -12,6 +16,7 @@ const {google} = useContext(AuthContext);
                 const signUser = result.user;
                 console.log(signUser);
                 toast.success('Successfully login with google')
+                navigate(from, {replace: true})
             })
             .catch(error => {
                 console.log(error);
