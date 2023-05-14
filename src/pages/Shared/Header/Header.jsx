@@ -21,14 +21,14 @@ const Header = () => {
     }
     const navLink = <>
         <li className="text-gray-500 font-bold"><Link to={'/'}>Home</Link></li>
-        <li className="text-gray-500 font-bold"><Link to={'/about'}>About</Link></li>
-        <li className="text-gray-500 font-bold"><Link to={'/service'}>Service</Link></li>
-        <li className="text-gray-500 font-bold"><Link to={'/blog'}>Blog</Link></li>
-        <li className="text-gray-500 font-bold"><Link to={'/contact'}>Contact</Link></li>
+        <li className="text-gray-500 font-bold"><Link to={'/#about'}>About</Link></li>
+        <li className="text-gray-500 font-bold"><Link to={'/#service'}>Service</Link></li>
+        <li className="text-gray-500 font-bold"><Link to={'/#blog'}>Blog</Link></li>
+        <li className="text-gray-500 font-bold"><Link to={'/#contact'}>Contact</Link></li>
         {
             user ? <>
                 <li className="text-gray-500 font-bold"><Link to={'/bookings'}>My Booking</Link></li>
-                <li onClick={handleLogOut} className="text-gray-500 font-bold"><Link to={'/contact'}>Log out</Link></li>
+                <li onClick={handleLogOut} className="text-gray-500 font-bold"><Link to={'/login'}>Log out</Link></li>
             </> :
                 <li className="text-gray-500 font-bold"><Link to={'/login'}>Login</Link></li>
         }

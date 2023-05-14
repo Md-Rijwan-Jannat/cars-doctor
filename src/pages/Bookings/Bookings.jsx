@@ -3,17 +3,31 @@ import { AuthContext } from "../../ContaxtProvider/AuthProvider";
 import Banner2 from "../Shared/Banner/Banner2";
 import Booking from "./Booking";
 import Swal from "sweetalert2";
+import { useNavigate } from "react-router-dom";
 
 const Bookings = () => {
     const [bookings, setBookings] = useState([]);
     console.log(bookings)
     const { user } = useContext(AuthContext);
+    const navigate = useNavigate()
+
     const url = `http://localhost:5000/bookings?email=${user?.email}`
     useEffect(() => {
-        fetch(url)
+        fetch(url,{
+            headers:{
+                authorization: `Bearer ${localStorage.getItem('car-access-token')}`
+            }
+        })
             .then(res => res.json())
-            .then(data => setBookings(data));
-    }, [])
+            .then(data=>{
+                if(!data.error){
+                    setBookings(data)
+                }
+                else{
+                    navigate('/')
+                }
+            })
+    }, [url])
     const deleteHandler = (_id) => {
         console.log(_id);
         Swal.fire({
@@ -74,7 +88,7 @@ const Bookings = () => {
                                 'success'
                             )
                             const remaining = bookings.filter(booking => booking._id !== _id);
-                            const updated = bookings.find(booking => booking._id !== _id);
+                            const updated = bookings.find(booking => booking._id === _id);
                             updated.status = 'confirm';
                             const newBookings = [updated, ...remaining];
                             setBookings(newBookings);
