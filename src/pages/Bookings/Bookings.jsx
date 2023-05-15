@@ -11,7 +11,7 @@ const Bookings = () => {
     const { user } = useContext(AuthContext);
     const navigate = useNavigate()
 
-    const url = `http://localhost:5000/bookings?email=${user?.email}`
+    const url = `https://cars-doctor-server0.vercel.app/bookings?email=${user?.email}`
     useEffect(() => {
         fetch(url,{
             headers:{
@@ -40,7 +40,7 @@ const Bookings = () => {
             confirmButtonText: 'Yes, delete it!'
         }).then((result) => {
             if (result.isConfirmed) {
-                fetch(`http://localhost:5000/bookings/${_id}`, {
+                fetch(`https://cars-doctor-server0.vercel.app/bookings/${_id}`, {
                     method: "DELETE"
                 })
                     .then(res => res.json())
@@ -71,7 +71,7 @@ const Bookings = () => {
             confirmButtonText: 'Yes, update it!'
         }).then((result) => {
             if (result.isConfirmed) {
-                fetch(`http://localhost:5000/bookings/${_id}`, {
+                fetch(`https://cars-doctor-server0.vercel.app/bookings/${_id}`, {
                     method: "PATCH",
                     headers: {
                         "content-type": " application/json"

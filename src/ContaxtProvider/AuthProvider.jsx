@@ -38,7 +38,7 @@ const AuthProvider = ({ children }) => {
                 email: currentUser?.email
             }
             if (currentUser && currentUser.email) {
-                fetch('http://localhost:5000/jwt', {
+                fetch('https://cars-doctor-server0.vercel.app/jwt', {
                     method: 'POST',
                     headers: {
                         'content-type': 'application/json'
